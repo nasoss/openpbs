@@ -489,6 +489,17 @@ static struct fc_translation_table fctt[] = {
 	{	/* RESOURCES_INSUFFICIENT */
 		"Too few free resources",
 		"Too few free resources",
+        },
+	/* localmod 161 */
+	{	/* BLOCKED_BY_FS_QUOTA */
+		"User or group over file system quota",
+		"User or group over file system quota",
+#ifdef NAS_WATSON /* localmod 131 */
+	},
+	{	/* QUEUE_NOT_IN_PARTITION */
+		"Queue not in partition",
+		"Queue not managed by this scheduler",
+#endif
 #endif
 	},
 };
@@ -2048,6 +2059,8 @@ translate_fail_code(schd_error *err, char *comment_msg, char *log_msg)
 		case GROUP_CPU_INSUFFICIENT:
 			/* localmod 998 */
 		case RESOURCES_INSUFFICIENT:
+			/* localmod 161 */
+		case BLOCKED_BY_FS_QUOTA:
 #endif
 			if (comment_msg != NULL)
 				snprintf(commentbuf, sizeof(commentbuf), ERR2COMMENT(err->error_code), arg1);
@@ -4364,6 +4377,9 @@ make_eligible(int pbs_sd, resource_resv *resresv)
 	if (resresv == NULL || resresv->job == NULL)
 		return;
 	if (resresv->job->accrue_type !=JOB_ELIGIBLE) {
+#ifdef NAS_WATSON /* localmod 131 */
+		if (conf.partition_id == NULL)
+#endif /* localmod 131 */
 		update_job_attr(pbs_sd, resresv, ATTR_accrue_type, NULL, ACCRUE_ELIG, NULL, UPDATE_LATER);
 		resresv->job->accrue_type = JOB_ELIGIBLE;
 	}
@@ -4385,6 +4401,9 @@ make_ineligible(int pbs_sd, resource_resv *resresv)
 	if (resresv == NULL || resresv->job == NULL)
 		return;
 	if (resresv->job->accrue_type !=JOB_INELIGIBLE) {
+#ifdef NAS_WATSON /* localmod 131 */
+		if (conf.partition_id == NULL)
+#endif /* localmod 131 */
 		update_job_attr(pbs_sd, resresv, ATTR_accrue_type, NULL, ACCRUE_INEL, NULL, UPDATE_LATER);
 		resresv->job->accrue_type = JOB_INELIGIBLE;
 	}
