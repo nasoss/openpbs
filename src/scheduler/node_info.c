@@ -2815,8 +2815,7 @@ eval_placement(status *policy, selspec *spec, node_info **ninfo_arr, place *pl,
 	 *         a ptr to a reordered static array
 	 */
 	if ((pl->pack && spec->total_chunks == 1 && nspec_arr != NULL) ||
-		(conf.provision_policy == AVOID_PROVISION && resresv->aoename != NULL) ||
-		(resresv->is_resv && resresv->resv != NULL && resresv->resv->check_alternate_nodes))
+		(conf.provision_policy == AVOID_PROVISION && resresv->aoename != NULL))
 		nptr = reorder_nodes(ninfo_arr, resresv);
 
 	if (nptr == NULL)

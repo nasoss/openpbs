@@ -1983,31 +1983,9 @@ char		ops[] = "operands";
 char		error[] = "error";
 
 #ifdef NAS /* localmod 071 */
-char	log_buffer[4096];
 extern	int	quiet;
 
 extern	void	add_cmds(Tcl_Interp *interp);
-
-/**
- * @brief
- *	log error msg on error
- *
- * @param[in] errnum - error number
- * @param[in] func - function name where error occured
- * @param[in] text - error msg
- *
- * @return	Void
- *
- */
-void
-log_err(int errnum, char *func, char *text)
-{
-	if (quiet)
-		return;
-	fprintf(stderr, "%s: %s: %s\n",
-		(errnum < 0) ? "Internal error" : strerror(errnum),
-		func, text);
-}
 
 /**
  * @brief
@@ -3022,7 +3000,7 @@ job_no_args:
 						if (alt_opt != 0) {
 							altdsp_statjob(p_status, p_server, alt_opt, wide, how_opt);
 						} else
-							if (display_statjob(p_status, p_server, f_opt, how_opt, alt_opt))
+							if (display_statjob(p_status, p_server, f_opt, how_opt, alt_opt, wide))
 								exit_qstat("out of memory");
 					}
 #else
