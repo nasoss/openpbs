@@ -3702,11 +3702,11 @@ parse(char *request, int *oper, int *type, char **names, struct attropl **attr)
 			return 1;
 		}
 
-#ifdef NAS /* localmod XXX5 */
+#ifdef NAS /* localmod 173 */
 		if (req[IND_OBJ] == NULL) {
 #else /* } */
 		if (EOL(req[IND_OBJ])) {
-#endif /* localmod XXX5 */
+#endif /* localmod 173 */
 			pstderr("qmgr: No object type given\n");
 			CLEAN_UP_REQ(req)
 			return 2;
@@ -3735,11 +3735,11 @@ parse(char *request, int *oper, int *type, char **names, struct attropl **attr)
 			return 2;
 		}
 
-#ifdef NAS /* localmod XXX5 */
+#ifdef NAS /* localmod 173 */
 		if (req[IND_NAME] != NULL) {
 #else /* } */
 		if (!EOL(req[IND_NAME])) {
-#endif /* localmod XXX5 */
+#endif /* localmod 173 */
 			if ((*type != MGR_OBJ_SITE_HOOK) && (*type != MGR_OBJ_PBS_HOOK) && (*type != MGR_OBJ_RSC) &&
 				is_attr(*type, req[IND_NAME], TYPE_ATTR_ALL)) {
 				len -= strlen(req[IND_NAME]);

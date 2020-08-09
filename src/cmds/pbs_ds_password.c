@@ -533,7 +533,7 @@ main(int argc, char *argv[])
 	}
 
 	/* escape password to use in sql strings later */
-#ifdef NAS /* localmod XXX20 */
+#ifdef NAS /* localmod 172 */
 	if (conn != NULL)
 #endif
 	if ((pquoted = pbs_db_escape_str(conn, passwd)) == NULL) {
